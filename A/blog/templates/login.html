@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+    <div>
+        <form action="." method="get">
+        {{ from.csrf_token }}
+        {{ form.email.label }}{{ form.email }}
+        {{ form.password.label }}{{ form.password }}
+        <input type="button" value="Login" class="btn btn-info">
+    </form>
+    </div>
+
+{% endblock %}

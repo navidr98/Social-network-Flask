@@ -3,7 +3,7 @@
 {% block title %}Register{% endblock %}
 
 {% block content %}
-    
+    {% include 'includes/form_errors.html' %}
     <form action="" method="post">
 
         {{ form.csrf_token }}

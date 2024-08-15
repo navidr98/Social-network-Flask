@@ -1,0 +1,9 @@
+<div align='center'>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for cat, msg in messages %}
+             <p align='center' class="alert alert-{{ cat }} col-md-3">{{ msg }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>

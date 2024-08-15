@@ -1,5 +1,12 @@
 from blog import db
 from sqlalchemy import Column
+from blog import db, login_manager
+
+
+@login_manager.user_loader
+def loader_user(user_id):
+    return User.query.get(user_id)
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)

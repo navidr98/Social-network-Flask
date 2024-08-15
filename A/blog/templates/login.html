@@ -6,11 +6,11 @@
 
     <div class="col-md-6">
         <form action="." method="get">
-        {{ form.csrf_token }}
-        {{ form.email.label(class='form-control-label') }} {{ form.email(class='form-control-label') }}<br>
-        {{ form.password.label(class='form-control-label') }} {{ form.password(class='form-control-label') }}
-        <input type="button" value="Login" class="btn btn-info">
-    </form>
+            {{ form.csrf_token }}
+            {{ form.email.label }} {{ form.email }}
+            {{ form.password.label }} {{ form.password }}
+            <input type="button" value="Login" class="btn btn-info">
+        </form>
     </div>
 
 {% endblock %}

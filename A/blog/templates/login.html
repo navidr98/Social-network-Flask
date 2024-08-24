@@ -10,6 +10,7 @@
         {{ form.csrf_token }}
         {{ form.email.label(class='form-control-label') }}: {{ form.email(class='form-control') }}
         {{ form.password.label(class='form-control-label') }}: {{ form.password(class='form-control') }}
+        {{ form.remember_me.label }} {{ form.remember_me }}
         {{ form.submit }}
 
     </form>

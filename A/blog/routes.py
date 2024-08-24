@@ -38,7 +38,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
-            login_user(user)
+            login_user(user, remember=form.remember_me.data)
             next_page = request.args.get('next')
             flash('You logged in successfully', 'success')
             return redirect(next_page if next_page else url_for('home'))
@@ -59,7 +59,7 @@ def logout():
 @app.route('/profile', methods=['GET','POST'])
 @login_required
 def profile():
-    
+
     form = EditprofileFrom()
     if form.validate_on_submit():
         current_user.username = form.username.data

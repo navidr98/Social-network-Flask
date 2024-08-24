@@ -15,6 +15,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(30), nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)
 
+
     def __repr__(self):
         return f'{self.__class__.__name__}({self.id} - {self.username})'
     

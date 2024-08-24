@@ -12,8 +12,14 @@
 
         {{ form.csrf_token }} 
         {{ form.username.label }} {{ form.username }}
+        {{ form.submit_user }}
+        <hr>
         {{ form.email.label }} {{ form.email }}
-        {{ form.submit }}
+        {{ form.submit_email }}
+        <hr>
+        {{ form.password.label }} {{ form.password }}
+        {{ form.confirm_password.label }} {{ form.confirm_password }}
+        {{ form.submit_pass }}
 
     </form>
 

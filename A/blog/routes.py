@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, flash, request
 from blog import app, db, bcrypt
-from blog.forms import RegistrationForm, LoginForm, EditprofileFrom
+from blog.forms import RegistrationForm, LoginForm, EditProfileFrom
 from blog.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -60,19 +60,29 @@ def logout():
 @login_required
 def profile():
 
-    form = EditprofileFrom()
+    form = EditProfileFrom()
+
     if form.validate_on_submit():
-        current_user.username = form.username.data
-        current_user.email = form.email.data
-        db.session.commit()
-        flash('Your profile has been updated','info')
-        return redirect(url_for('profile'))
+        if form.submit_user.data:
+            current_user.username = form.username.data
+            current_user.email = form.email.data
+            db.session.commit()
+            flash('Your profile has been updated','info')
+            return redirect(url_for('profile'))
+    
+        elif form.submit_pass.data:
+            hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+            current_user.password = hashed_password
+            db.session.commit()
+            flash('Your password has been updated','info')
+            return redirect(url_for('profile'))
     
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
     return render_template('profile.html', form=form)
 
+    
 
 
 

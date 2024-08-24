@@ -34,12 +34,14 @@ class LoginForm(FlaskForm):
 
 
 
-class EditprofileFrom(FlaskForm):
+class EditProfileFrom(FlaskForm):
     username = StringField('Username',validators=[Length(min=3, max=30, message='Username must be between 3 and 30 characters long')])
     email = StringField('Email',validators=[Email(message='Enter valid email like exampel@mail.com')])
-    password = PasswordField('New Password',validators=[Length(min=4, max=30, message='Enter password contains 4 charachter at least')])
+    password = PasswordField('New Password',validators=[Length(max=30, message='Enter password contains 4 charachter at least')])
     confirm_password = PasswordField('Confirm Password', validators=[EqualTo('password', message='Password must match')])
-    submit = SubmitField('Update')
+    submit_user = SubmitField('Update Username')
+    submit_email = SubmitField('Update Email')
+    submit_pass = SubmitField('Update Password')
 
     def validate_username(self, username):
         if username.data != current_user.username:
@@ -52,3 +54,5 @@ class EditprofileFrom(FlaskForm):
             user = User.query.filter_by(email=email.data).first()
             if user:
                 raise ValidationError("This email already exists")
+            
+   

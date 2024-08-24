@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    {% include 'includes/form_errors.html' %}
+
+    <div>
+        <form action="" method="post">
+
+            {{ form.csrf_token }}
+
+            {{ form.email.label(class='form-control-label') }}: {{ form.email(class='form-control') }}
+
+            {{ form.password.label(class='form-control-label') }}: {{ form.password(class='form-control') }}
+
+            {{ form.submit }}
+
+
+        </form>
+    </div>
+
+{% endblock %}

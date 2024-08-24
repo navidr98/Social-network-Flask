@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+    {% include 'includes/form_errors.html' %}
+
+    <div>
+        <form action="" method="post">
+
+            {{ form.csrf_token }}
+
+            <div>{{ form.username.label(class='form-control-label ') }}: {{ form.username(class='form-control') }}</div>
+    
+            {{ form.email.label(class='form-control-label') }}: {{ form.email(class='form-control') }}
+    
+            {{ form.password.label(class='form-control-label') }}:  {{ form.password(class='form-control') }}
+    
+            {{ form.confirm_password.label(class='form-control-label') }}:  {{ form.confirm_password(class='form-control') }}
+            
+            {{ form.submit }}
+    
+        </form>
+    </div>
+
+{% endblock %}

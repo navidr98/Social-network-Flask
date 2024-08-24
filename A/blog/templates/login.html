@@ -3,13 +3,20 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
+    {% include 'includes/form_errors.html' %}
 
-    <div class="col-md-6">
-        <form action="." method="get">
+    <div>
+        <form action="" method="post">
+
             {{ form.csrf_token }}
-            {{ form.email.label }} {{ form.email }}
-            {{ form.password.label }} {{ form.password }}
-            <input type="submit" value="Login" class="btn btn-info">
+
+            {{ form.email.label(class='form-control-label') }}: {{ form.email(class='form-control') }}
+
+            {{ form.password.label(class='form-control-label') }}: {{ form.password(class='form-control') }}
+
+            {{ form.submit }}
+
+
         </form>
     </div>
 

@@ -1,42 +1,32 @@
-<div align='center'>
-    {% if form.username.errors %}
+
+<div>
+    {% if form.username and form.username.errors %}
         {% for error in form.username.errors %}
             <p class="alert alert-danger" >{{ error }}</p>
         {% endfor %}
     {% endif %}
 </div>
 
-{% if form.username.errors %}
-    {% for error in form.username.errors %}
-        <p class="alert alert-danger col-md-3" >{{ error }}</p>
-    {% endfor %}
-{% endif %}
-
-<div align='center'>
-    {% if form.username.errors %}
-        {% for error in form.username.errors %}
-            <p class="alert alert-danger col-md-3" >{{ error }}</p>
-        {% endfor %}
-    {% endif %}
-</div>
-
-<div align='center'>
-    {% if form.email.errors %}
+<div>
+    {% if form.email and form.email.errors %}
         {% for error in form.email.errors %}
-            <p class="alert alert-danger col-md-3" >{{ error }}</p>
+            <p class="alert alert-danger" >{{ error }}</p>
         {% endfor %}
     {% endif %}
 </div>
-{% if form.password.errors %}
-    {% for error in form.password.errors %}
-        <p class="alert alert-danger col-md-3" >{{ error }}</p>
-    {% endfor %}
-{% endif %}
+    
+<div>
+    {% if form.password and form.password.errors %}
+        {% for error in form.password.errors %}
+            <p class="alert alert-danger" >{{ error }}</p>
+        {% endfor %}
+    {% endif %}
+</div>
 
-<div align='center'>
-    {% if form.confirm_password.errors %}
+<div>
+    {% if form.confirm_password and form.confirm_password.errors %}
         {% for error in form.confirm_password.errors %}
-            <p class="alert alert-danger col-md-3" >{{ error }}</p>
+            <p class="alert alert-danger" >{{ error }}</p>
         {% endfor %}
     {% endif %}
 </div>

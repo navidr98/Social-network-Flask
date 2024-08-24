@@ -7,7 +7,10 @@
     <h3>{{ current_user.username|upper }}</h3>
     <p>{{ current_user.email }}</p>
 
+    <a href="{{ url_for('new_post') }}" class="btn btn-info">Create new post</a><br><br>
+    
     {% include 'includes/form_errors.html' %}
+
     <form action="" method="post">
 
         {{ form.csrf_token }} 

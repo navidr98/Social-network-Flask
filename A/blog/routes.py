@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, flash, request
 from blog import app, db, bcrypt
-from blog.forms import RegistrationForm, LoginForm, EditProfileFrom
+from blog.forms import RegistrationForm, LoginForm, EditProfileFrom, Postform
 from blog.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -8,7 +8,17 @@ from flask_login import login_user, current_user, logout_user, login_required
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    posts = Post.query.all()
+    return render_template('home.html', posts=posts)
+
+
+@app.route('/detail/<int:post_id>')
+def detail(post_id):
+    post =Post.query.get_or_404(post_id)
+    return render_template('detail.html', post=post)
+
+
+
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -83,7 +93,17 @@ def profile():
     return render_template('profile.html', form=form)
 
     
-
+@app.route('/post/new', methods=['GET','POST'])
+@login_required
+def new_post():
+    form = Postform()
+    if form.validate_on_submit():
+        post = Post(title=form.title.data, content=form.content.data, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post created successfully', 'success')
+        return redirect(url_for('profile'))
+    return render_template('create_post.html', form=form)
 
 
 

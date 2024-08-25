@@ -13,7 +13,7 @@
         {% for post in posts %}
             <div class="post">
                     <p class="title">
-                        <a href="{{ url_for('post_detail', post_id=post.id) }}">
+                        <a href="{{ url_for('post_detail', post_id=post.id, user_id=current_user.id) }}">
                             {{ post.title }}
                         </a>
                     </p>

@@ -12,6 +12,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(45), unique=True, nullable=False)
     password = db.Column(db.String(30), nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)
+    comments = db.relationship('Comment', backref='owner', lazy=True)
 
     def __repr__(self):
         return f'{self.__class__.__name__}({self.id} - {self.username})'
@@ -22,15 +23,17 @@ class Post(db.Model):
     date = db.Column(db.DateTime, default=datetime.now)
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    comments = db.relationship('Comment', backref='post')
+    comments = db.relationship('Comment', backref='post', lazy=True)
 
     def __repr__(self):
         return f'{self.__class__.__name__}({self.id} - {self.title[:20]} - {self.date})'
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.DateTime, default=datetime.now)
     content = db.Column(db.Text)
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
         return f'{self.__class__.__name__}({self.id} - {self.content[:20]}'

@@ -7,6 +7,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route('/')
 @app.route('/home')
+@login_required
 def home():
     posts = Post.query.all()
     return render_template('home.html', posts=posts)
@@ -97,7 +98,7 @@ def new_post():
         db.session.add(post)
         db.session.commit()
         flash('Your post created successfully', 'success')
-        return redirect(url_for('profile'))
+        return redirect(url_for('profile', user_id=current_user.id))
     return render_template('create_post.html', form=form)
 
 
@@ -136,17 +137,18 @@ def edit_post(post_id):
 
 
 
-@app.route('/post_detail/<int:post_id>', methods=('GET', 'POST'))
+@app.route('/post_detail/<int:post_id>/<int:user_id>', methods=('GET', 'POST'))
 @login_required
-def post_detail(post_id):
+def post_detail(post_id, user_id):
     form = CommentForm()
     post = Post.query.get_or_404(post_id)
+    user = User.query.get_or_404(user_id)
     if form.validate_on_submit() and form.submit.data:
-        comment = Comment(content=form.content.data, post=post)
+        comment = Comment(content=form.content.data, post=post, owner=current_user)
         db.session.add(comment)
         db.session.commit()
         flash('Your comment added successfully', 'success')
-        return redirect(url_for('post_detail', post_id=post.id))
+        return redirect(url_for('post_detail', post_id=post.id, user_id=current_user.id))
 
     return render_template('post_detail.html', post=post, form=form)
 

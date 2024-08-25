@@ -141,8 +141,8 @@ def edit_post(post_id):
 def post_detail(post_id):
     form = CommentForm()
     post = Post.query.get_or_404(post_id)
-    if form.validate_on_submit() and form.submit.data:
-        comment = Comment(contet=form.content.data, post=post)
+    if form.validate_on_submit():
+        comment = Comment(content=form.content.data, post=post)
         db.session.add(comment)
         db.session.commit()
         flash('Your comment added successfully', 'success')

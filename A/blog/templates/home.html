@@ -2,11 +2,25 @@
 
 {% block title %}Home{% endblock %}
 
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+{% endblock %}
+
 {% block content %}
-    
-    <div class="card">
+
+    <div class="content">
         {% for post in posts %}
-            <a href="{{ url_for('detail', post_id=post.id) }}" class="card-body">{{ post.title }}</a><br>
+            <div class="post">
+                    <p class="title">
+                        <a href="{{ url_for('post_detail', post_id=post.id) }}">
+                            {{ post.title }}
+                        </a>
+                    </p>
+                <div class="content">
+                    <p>{{ post.content }}</p>
+                </div>
+                <hr>
+            </div>
         {% endfor %}
     </div>
 

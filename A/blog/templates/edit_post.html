@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+
+    <form action="" method="post">
+
+        {{ form.csrf_token }}
+        {{ form.title.label(class='form-control-label') }} {{ form.title(class='form-control') }}
+        {{ form.content.label(class='form-control-label') }} {{ form.content(class='form-control') }}
+        {{ form.submit(class='btn btn-info') }}
+        
+    </form>
+
+{% endblock %}

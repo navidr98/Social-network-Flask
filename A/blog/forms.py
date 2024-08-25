@@ -55,7 +55,17 @@ class EditProfileFrom(FlaskForm):
             if user:
                 raise ValidationError("This email already exists")
             
-class Postform(FlaskForm):
+class PostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     content = TextAreaField('Content', validators=[DataRequired()])
     submit = SubmitField('Post')
+
+
+class EditPostForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    content = TextAreaField('Content', validators=[DataRequired()])
+    submit = SubmitField('Edit Post')
+
+class CommentForm(FlaskForm):
+    content = TextAreaField('Comment')
+    submit = SubmitField('Add Comment')

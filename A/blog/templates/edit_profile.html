@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+
+    <h3>{{ current_user.username|upper }}</h3>
+    
+    {% include 'includes/form_errors.html' %}
+
+    <form action="" method="post">
+
+        {{ form.csrf_token }} 
+        {{ form.username.label }} {{ form.username }}
+        {{ form.submit_user }}
+        <hr>
+        {{ form.email.label }} {{ form.email }}
+        {{ form.submit_email }}
+        <hr>
+        {{ form.password.label }} {{ form.password }}
+        {{ form.confirm_password.label }} {{ form.confirm_password }}
+        {{ form.submit_pass }}
+
+    </form>
+
+{% endblock %}

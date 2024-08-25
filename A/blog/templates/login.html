@@ -5,19 +5,14 @@
 {% block content %}
     {% include 'includes/form_errors.html' %}
 
-    <div>
-        <form action="" method="post">
+    <form action="" method="post">
 
-            {{ form.csrf_token }}
+        {{ form.csrf_token }}
+        {{ form.email.label(class='form-control-label') }}: {{ form.email(class='form-control') }}
+        {{ form.password.label(class='form-control-label') }}: {{ form.password(class='form-control') }}
+        {{ form.remember_me.label }} {{ form.remember_me }}<br>
+        {{ form.submit }}
 
-            {{ form.email.label(class='form-control-label') }}: {{ form.email(class='form-control') }}
-
-            {{ form.password.label(class='form-control-label') }}: {{ form.password(class='form-control') }}
-
-            {{ form.submit }}
-
-
-        </form>
-    </div>
+    </form>
 
 {% endblock %}

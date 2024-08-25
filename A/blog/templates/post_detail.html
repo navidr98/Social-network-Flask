@@ -22,7 +22,6 @@
             </form>
             {% for comment in post.comments %}
                 <div class="comment">
-                    <p>comment by {{ comment.id }}</p>
                     <p>{{ comment.content }}</p>
                 </div>
             {% endfor %}

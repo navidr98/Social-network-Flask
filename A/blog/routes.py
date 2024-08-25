@@ -50,16 +50,16 @@ def login():
 @app.route('/logout')
 @login_required
 def logout():
-
     logout_user()
     flash('You logged out successfully', 'success')
     return redirect(url_for('home'))
 
 
-@app.route('/profile')
+@app.route('/profile/<int:user_id>')
 @login_required
-def profile():
-    return render_template('profile.html' )
+def profile(user_id):
+    user = User.query.get(user_id)
+    return render_template('profile.html', user=user)
 
 
 @app.route('/profile/edit/>', methods=['GET','POST'])
@@ -141,7 +141,7 @@ def edit_post(post_id):
 def post_detail(post_id):
     form = CommentForm()
     post = Post.query.get_or_404(post_id)
-    if form.validate_on_submit():
+    if form.validate_on_submit() and form.submit.data:
         comment = Comment(content=form.content.data, post=post)
         db.session.add(comment)
         db.session.commit()
@@ -150,3 +150,6 @@ def post_detail(post_id):
 
     return render_template('post_detail.html', post=post, form=form)
 
+@app.route('/profile')
+def show_post():
+    pass

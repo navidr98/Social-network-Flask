@@ -35,7 +35,7 @@ class Comment(db.Model):
     content = db.Column(db.Text)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    replies = db.relationship('Reply', backref='rep', lazy=True)        
+    rep = db.relationship('Reply', backref='comment', lazy=True)        
 
     def __repr__(self):
         return f'{self.__class__.__name__}({self.id} - {self.content[:20]}'

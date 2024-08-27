@@ -72,4 +72,4 @@ class CommentForm(FlaskForm):
 
 class ReplyForm(FlaskForm):
     text = TextAreaField('Reply')
-    submit_reply = SubmitField('Reply')
+    submit = SubmitField('Reply')

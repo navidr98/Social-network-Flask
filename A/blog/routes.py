@@ -140,22 +140,26 @@ def edit_post(post_id):
 @app.route('/post_detail/<int:post_id>/', methods=('GET', 'POST'))
 @login_required
 def post_detail(post_id):
-    form = CommentForm()
-    form_rep = ReplyForm()
+    comment_form = CommentForm()
+    reply_form = ReplyForm()
     post = Post.query.get_or_404(post_id)
-    comment = Comment.query.get_or_404(post_id)
-    if form.validate_on_submit() and form.submit.data:
-        comment = Comment(content=form.content.data, post=post, owner=current_user)
+    if comment_form.validate_on_submit():
+        comment = Comment(content=comment_form.content.data, post=post, owner=current_user)
         db.session.add(comment)
         db.session.commit()
         flash('Your comment added successfully', 'success')
         return redirect(url_for('post_detail', post_id=post.id))
-        
-    elif form_rep.validate_on_submit() and form_rep.submit_reply.data:
-        reply = Reply(text=form_rep.text.data, rep=comment, response=current_user)
+    return render_template('post_detail.html', post=post, comment_form=comment_form, reply_form=reply_form)
+
+@app.route('/reply/<int:comment_id>', methods=['GET', 'POST'])
+def reply(comment_id):
+    comment = Comment.query.get_or_404(comment_id)
+    comment_form = CommentForm()
+    reply_form = ReplyForm()
+    if reply_form.validate_on_submit():
+        reply = Reply(text=reply_form.text.data, comment=comment, response=current_user)
         db.session.add(reply)
         db.session.commit()
-        flash('Your reply added successfully', 'success')
-        return redirect(url_for('post_detail', post_id=post.id,))
+        return redirect(url_for('post_detail', post_id=comment.post.id))
+    return render_template('post_detail.html', comment=comment, post=comment.post, comment_form=comment_form, reply_form=reply_form)
 
-    return render_template('post_detail.html', post=post, form=form, form_rep=form_rep)

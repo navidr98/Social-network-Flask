@@ -15,36 +15,16 @@
             </div>
             <hr>
             <h3>Comments</h3>
-        
-            {% for comment in post.comments %}
-                <div class="comment">
-                    <p>Comment by {{ comment.owner.username|upper }} - {{ comment.date.strftime('%Y-%m-%d') }}</p>
-                    <p>{{ comment.content }}</p>
-                    
-                    {% if comment.replies %}
-                        <h4>Replies</h4>
-                    {% endif %}
-
-                    {% for reply in comment.replies %}
-                        <div class="comment">
-                            <p> Replied by {{ reply.response.username }} - {{ reply.date.strftime('%Y-%m-%d') }}</p>
-                            <p>{{ reply.text }}</p>
-                            <hr>
-                        </div>
-                    {% endfor %}
-                    <form action="" method="post">
-                        {{ form_rep.csrf_token }}
-                        {{ form_rep.text(class='form-control') }}<br>
-                        {{ form_rep.submit_reply }}
-                    </form>
-                </div>
-            {% endfor %}<hr>
-
             <form action="" method="post">
                 {{ form.csrf_token }}
                 {{ form.content(class='form-control') }}<br>
                 {{ form.submit }}
             </form>
+            {% for comment in post.comments %}
+                <div class="comment">
+                    <p>{{ comment.content }}</p>
+                </div>
+            {% endfor %}
             
         </div>
     </div>

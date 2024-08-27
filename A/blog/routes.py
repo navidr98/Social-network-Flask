@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, flash, request, abort
 from blog import app, db, bcrypt
-from blog.forms import RegistrationForm, LoginForm, EditProfileFrom, PostForm ,EditPostForm, CommentForm
-from blog.models import User, Post, Comment
+from blog.forms import RegistrationForm, LoginForm, EditProfileFrom, PostForm ,EditPostForm, CommentForm, ReplyForm
+from blog.models import User, Post, Comment, Reply
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -137,21 +137,25 @@ def edit_post(post_id):
 
 
 
-@app.route('/post_detail/<int:post_id>/<int:user_id>', methods=('GET', 'POST'))
+@app.route('/post_detail/<int:post_id>/', methods=('GET', 'POST'))
 @login_required
-def post_detail(post_id, user_id):
+def post_detail(post_id):
     form = CommentForm()
+    form_rep = ReplyForm()
     post = Post.query.get_or_404(post_id)
-    user = User.query.get_or_404(user_id)
+    comment = Comment.query.get_or_404(post_id)
     if form.validate_on_submit() and form.submit.data:
         comment = Comment(content=form.content.data, post=post, owner=current_user)
         db.session.add(comment)
         db.session.commit()
         flash('Your comment added successfully', 'success')
-        return redirect(url_for('post_detail', post_id=post.id, user_id=current_user.id))
+        return redirect(url_for('post_detail', post_id=post.id))
+        
+    elif form_rep.validate_on_submit() and form_rep.submit_reply.data:
+        reply = Reply(text=form_rep.text.data, rep=comment, response=current_user)
+        db.session.add(reply)
+        db.session.commit()
+        flash('Your reply added successfully', 'success')
+        return redirect(url_for('post_detail', post_id=post.id,))
 
-    return render_template('post_detail.html', post=post, form=form)
-
-@app.route('/profile')
-def show_post():
-    pass
+    return render_template('post_detail.html', post=post, form=form, form_rep=form_rep)

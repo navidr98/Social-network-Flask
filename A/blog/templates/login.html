@@ -2,17 +2,24 @@
 
 {% block title %}Login{% endblock %}
 
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+{% endblock %}
+
 {% block content %}
+<div class="wrapper">
     {% include 'includes/form_errors.html' %}
+    <img class="logo" src="../static/images/logo2.png" alt="">
+    <div class="form-login">
+        <form action="" method="post">
 
-    <form action="" method="post">
+            {{ form.csrf_token }}
+            {{ form.email.label(class='form-label') }}: {{ form.email(class='box-form') }}
+            {{ form.password.label(class='form-label') }}: {{ form.password(class='box-form') }}
+            {{ form.remember_me.label(class='remember') }} {{ form.remember_me }}<br>
+            {{ form.submit(class='log-in')}}
 
-        {{ form.csrf_token }}
-        {{ form.email.label(class='form-control-label') }}: {{ form.email(class='form-control') }}
-        {{ form.password.label(class='form-control-label') }}: {{ form.password(class='form-control') }}
-        {{ form.remember_me.label }} {{ form.remember_me }}<br>
-        {{ form.submit }}
-
-    </form>
-
+        </form>
+    </div>
+</div>        
 {% endblock %}

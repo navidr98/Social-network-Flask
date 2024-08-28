@@ -1,12 +1,13 @@
 from flask import render_template, redirect, url_for, flash, request, abort
 from blog import app, db, bcrypt
-from blog.forms import RegistrationForm, LoginForm, EditProfileFrom, PostForm ,EditPostForm, CommentForm
-from blog.models import User, Post, Comment
+from blog.forms import RegistrationForm, LoginForm, EditProfileFrom, PostForm ,EditPostForm, CommentForm, ReplyForm, LikeForm, DisLikeForm
+from blog.models import User, Post, Comment, Reply, Like
 from flask_login import login_user, current_user, logout_user, login_required
 
 
 @app.route('/')
 @app.route('/home')
+@login_required
 def home():
     posts = Post.query.all()
     return render_template('home.html', posts=posts)
@@ -97,22 +98,11 @@ def new_post():
         db.session.add(post)
         db.session.commit()
         flash('Your post created successfully', 'success')
-        return redirect(url_for('profile'))
+        return redirect(url_for('profile', user_id=current_user.id))
     return render_template('create_post.html', form=form)
 
 
 
-@app.route('/post/delete/<int:post_id>')
-@login_required
-def delete_post(post_id):
-
-    post = Post.query.get_or_404(post_id)
-    if post.author != current_user:
-        abort(403)
-    db.session.delete(post)
-    db.session.commit()
-    flash('Post deleted successfully', 'success')
-    return redirect(url_for('home'))
 
 
 @app.route('/post/update/<int:post_id>', methods=['GET','POST'])
@@ -136,20 +126,103 @@ def edit_post(post_id):
 
 
 
-@app.route('/post_detail/<int:post_id>', methods=('GET', 'POST'))
+@app.route('/post_detail/<int:post_id>/', methods=('GET', 'POST'))
 @login_required
 def post_detail(post_id):
-    form = CommentForm()
+
+    dislike_form = DisLikeForm()
+    like_form = LikeForm()
+    comment_form = CommentForm()
+    reply_form = ReplyForm()
     post = Post.query.get_or_404(post_id)
-    if form.validate_on_submit() and form.submit.data:
-        comment = Comment(content=form.content.data, post=post)
+    existing_like = Like.query.filter_by(user_id=current_user.id, post_id=post.id).first()
+
+    if comment_form.validate_on_submit():
+        comment = Comment(content=comment_form.content.data, post=post, owner=current_user)
         db.session.add(comment)
         db.session.commit()
         flash('Your comment added successfully', 'success')
         return redirect(url_for('post_detail', post_id=post.id))
+    return render_template('post_detail.html', post=post, comment_form=comment_form,
+                            reply_form=reply_form ,like_form=like_form, dislike_form=dislike_form, existing_like=existing_like)
 
-    return render_template('post_detail.html', post=post, form=form)
 
-@app.route('/profile')
-def show_post():
-    pass
+@app.route('/reply/<int:comment_id>', methods=['GET', 'POST'])
+def reply(comment_id):
+    comment = Comment.query.get_or_404(comment_id)
+    comment_form = CommentForm()
+    reply_form = ReplyForm()
+    if reply_form.validate_on_submit():
+        reply = Reply(text=reply_form.text.data, comment=comment, response=current_user)
+        db.session.add(reply)
+        db.session.commit()
+        return redirect(url_for('post_detail', post_id=comment.post.id))
+    return render_template('post_detail.html', comment=comment, post=comment.post,
+                            comment_form=comment_form, reply_form=reply_form)
+
+
+@app.route('/post/delete/<int:post_id>')
+@login_required
+def delete_post(post_id):
+
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    db.session.delete(post)
+    db.session.commit()
+    flash('Post deleted successfully', 'success')
+    return redirect(url_for('home'))
+
+
+@app.route('/comment/delete/<int:comment_id>')
+@login_required
+def delete_comment(comment_id):
+
+    comment = Comment.query.get_or_404(comment_id)
+    if comment.owner != current_user:
+        abort(403)
+    db.session.delete(comment)
+    db.session.commit()
+    flash('Comment deleted successfully', 'success')
+    return redirect(url_for('home'))
+
+
+@app.route('/reply/delete/<int:reply_id>')
+@login_required
+def delete_reply(reply_id):
+
+    reply = Reply.query.get_or_404(reply_id)
+    if reply.response != current_user:
+        abort(403)
+    db.session.delete(reply)
+    db.session.commit()
+    flash('Reply deleted successfully', 'success')
+    return redirect(url_for('home'))
+
+
+@app.route('/like/<int:post_id>', methods=['POST'])
+def like(post_id):
+
+    like_form=LikeForm()
+    post = Post.query.get_or_404(post_id)
+
+    if current_user.id:
+        existing_like = Like.query.filter_by(user_id=current_user.id, post_id=post.id).first()
+        if not existing_like and like_form.validate_on_submit():
+            new_like = Like(user=current_user, like=post)
+            db.session.add(new_like)
+            db.session.commit()
+        return redirect(url_for('post_detail', post_id=post.id))
+
+@app.route('/unlike/<int:post_id>', methods=['POST'])
+def unlike(post_id):
+
+    dislike_form=DisLikeForm()
+    post = Post.query.get_or_404(post_id)
+
+    if current_user.id:
+        existing_like = Like.query.filter_by(user_id=current_user.id, post_id=post.id).first()
+        if existing_like and dislike_form.validate_on_submit():
+            db.session.delete(existing_like)
+            db.session.commit()
+        return redirect(url_for('post_detail', post_id=post.id))

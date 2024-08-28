@@ -69,3 +69,14 @@ class EditPostForm(FlaskForm):
 class CommentForm(FlaskForm):
     content = TextAreaField('Comment')
     submit = SubmitField('Add Comment')
+
+class ReplyForm(FlaskForm):
+    text = TextAreaField('Reply')
+    submit = SubmitField('Add Reply')
+
+
+class LikeForm(FlaskForm):
+    submit = SubmitField('Like')
+
+class DisLikeForm(FlaskForm):
+    submit = SubmitField('DisLike')

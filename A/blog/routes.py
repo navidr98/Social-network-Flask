@@ -1,16 +1,26 @@
 from flask import render_template, redirect, url_for, flash, request, abort
 from blog import app, db, bcrypt
-from blog.forms import RegistrationForm, LoginForm, EditProfileFrom, PostForm ,EditPostForm, CommentForm, ReplyForm, LikeForm, DisLikeForm
+from blog.forms import RegistrationForm, LoginForm, EditProfileFrom, PostForm ,EditPostForm, CommentForm, ReplyForm, LikeForm, DisLikeForm, SearchForm
 from blog.models import User, Post, Comment, Reply, Like
 from flask_login import login_user, current_user, logout_user, login_required
 
 
-@app.route('/')
-@app.route('/home')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/home', methods=['GET', 'POST'])
 @login_required
 def home():
+    form = SearchForm()
     posts = Post.query.all()
-    return render_template('home.html', posts=posts)
+    return render_template('home.html', form=form, posts=posts)
+
+@app.route('/search', methods=['GET', 'POST'])
+def search_post():
+    form = SearchForm()
+    search_posts = []
+    if form.validate_on_submit():
+        title = form.title.data
+        search_posts = Post.query.filter(Post.title.contains(title)).all()
+    return render_template('home.html', form=form, search_posts=search_posts)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -226,3 +236,5 @@ def unlike(post_id):
             db.session.delete(existing_like)
             db.session.commit()
         return redirect(url_for('post_detail', post_id=post.id))
+    
+

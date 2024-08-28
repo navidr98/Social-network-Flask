@@ -30,3 +30,11 @@
         {% endfor %}
     {% endif %}
 </div>
+
+<div>
+    {% if form.title and form.title.errors %}
+        {% for error in form.title %}
+            <p class="alert alert-danger" >{{ error }}</p>
+        {% endfor %}
+    {% endif %}
+</div>

@@ -10,6 +10,34 @@
 
 {% block content %}
 
+    <h1>Search Posts</h1>
+    <form method="POST" action="{{ url_for('search_post') }}">
+        {{ form.hidden_tag() }}
+        {{ form.title.label }} {{ form.title(size=32) }}<br>
+        {{ form.submit() }}
+    </form>
+    
+    <ul>
+        {% for post in search_posts %}
+            <li>
+                <div class="content">
+                    <div class="post">
+                            <p class="title">
+                                <a href="{{ url_for('post_detail', post_id=post.id) }}">
+                                    {{ post.title }}
+                                </a>
+                            </p>
+                        <div class="content">
+                            <p>{{ post.content }}</p>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    </ul><br><br><hr>
+
     <h3>ALL POSTS</h3>
     <div class="content">
         {% for post in posts %}

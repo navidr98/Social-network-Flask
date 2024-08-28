@@ -80,3 +80,7 @@ class LikeForm(FlaskForm):
 
 class DisLikeForm(FlaskForm):
     submit = SubmitField('DisLike')
+
+class SearchForm(FlaskForm):
+    title = StringField('Search by Title', validators=[DataRequired(message="please enter any title")])
+    submit = SubmitField('Search')

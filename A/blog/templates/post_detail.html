@@ -12,8 +12,15 @@
             </b>
             <div class="content">
                 <p>{{ post.content }}</p>
+                
             </div>
+
+            {% if post.author == current_user %}
+                <a href="{{ url_for('edit_post', post_id=post.id) }}" class="btn btn-info">Edit Post</a><br><br>
+                <a href="{{ url_for('delete_post', post_id=post.id) }}" class="btn btn-danger">Delete Post</a>
+            {% endif %}
             <hr>
+            
             <h3>Comments</h3>
             <form action="" method="post">
 
@@ -27,6 +34,9 @@
                 <div class="comment">
                     <p>Comment by {{ comment.owner.username|upper }} - {{ comment.date.strftime('%Y-%m-%d') }}</p>
                     <p>{{ comment.content }}</p>
+                    {% if comment.owner == current_user %}
+                                <a href="{{ url_for('delete_comment', comment_id=comment.id) }}" class="btn btn-danger">Delete comment</a>
+                            {% endif %}
                     
                     {% if comment.replies %}
                         <h4>Replies</h4>
@@ -42,6 +52,9 @@
                         <div class="comment">
                             <p> Replied by {{ reply.response.username }} - {{ reply.date.strftime('%Y-%m-%d') }}</p>
                             <p>{{ reply.text }}</p>
+                            {% if reply.response == current_user %}
+                                <a href="{{ url_for('delete_reply', reply_id=reply.id) }}" class="btn btn-danger">Delete Reply</a>
+                            {% endif %}
                             <hr>
                         </div>
                         
@@ -56,8 +69,5 @@
     </div>
 
 
-    {% if post.author == current_user %}
-        <a href="{{ url_for('edit_post', post_id=post.id) }}" class="btn btn-info">Edit Post</a><br><br>
-        <a href="{{ url_for('delete_post', post_id=post.id) }}" class="btn btn-danger">Delete Post</a>
-    {% endif %}
+    
 {% endblock %}

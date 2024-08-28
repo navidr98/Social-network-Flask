@@ -103,17 +103,6 @@ def new_post():
 
 
 
-@app.route('/post/delete/<int:post_id>')
-@login_required
-def delete_post(post_id):
-
-    post = Post.query.get_or_404(post_id)
-    if post.author != current_user:
-        abort(403)
-    db.session.delete(post)
-    db.session.commit()
-    flash('Post deleted successfully', 'success')
-    return redirect(url_for('home'))
 
 
 @app.route('/post/update/<int:post_id>', methods=['GET','POST'])
@@ -162,4 +151,44 @@ def reply(comment_id):
         db.session.commit()
         return redirect(url_for('post_detail', post_id=comment.post.id))
     return render_template('post_detail.html', comment=comment, post=comment.post, comment_form=comment_form, reply_form=reply_form)
+
+
+@app.route('/post/delete/<int:post_id>')
+@login_required
+def delete_post(post_id):
+
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    db.session.delete(post)
+    db.session.commit()
+    flash('Post deleted successfully', 'success')
+    return redirect(url_for('home'))
+
+
+@app.route('/comment/delete/<int:comment_id>')
+@login_required
+def delete_comment(comment_id):
+
+    comment = Comment.query.get_or_404(comment_id)
+    if comment.owner != current_user:
+        abort(403)
+    db.session.delete(comment)
+    db.session.commit()
+    flash('Comment deleted successfully', 'success')
+    return redirect(url_for('home'))
+
+
+@app.route('/reply/delete/<int:reply_id>')
+@login_required
+def delete_reply(reply_id):
+
+    reply = Reply.query.get_or_404(reply_id)
+    if reply.response != current_user:
+        abort(403)
+    db.session.delete(reply)
+    db.session.commit()
+    flash('Reply deleted successfully', 'success')
+    return redirect(url_for('home'))
+
 

@@ -11,7 +11,18 @@
                 <p class="title">{{ post.title }} - {{ post.date.strftime('%Y-%m-%d') }}</p>
             </b>
             <div class="content">
-                <p>{{ post.content }}</p>
+                <p>{{ post.content }} - Likes: {{ post.likes|length }}</p>
+                {% if existing_like %}
+                    <form method="POST" action="{{ url_for('unlike', post_id=post.id) }}">
+                        {{ dislike_form.csrf_token }}
+                        {{ dislike_form.submit }}
+                    </form>
+                {% else %}
+                    <form method="POST" action="{{ url_for('like', post_id=post.id) }}">
+                        {{ like_form.csrf_token }}
+                        {{ like_form.submit }}
+                    </form>
+                {% endif %}
                 
             </div>
 

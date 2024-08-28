@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, flash, request, abort
 from blog import app, db, bcrypt
-from blog.forms import RegistrationForm, LoginForm, EditProfileFrom, PostForm ,EditPostForm, CommentForm, ReplyForm
-from blog.models import User, Post, Comment, Reply
+from blog.forms import RegistrationForm, LoginForm, EditProfileFrom, PostForm ,EditPostForm, CommentForm, ReplyForm, LikeForm, DisLikeForm
+from blog.models import User, Post, Comment, Reply, Like
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -129,16 +129,23 @@ def edit_post(post_id):
 @app.route('/post_detail/<int:post_id>/', methods=('GET', 'POST'))
 @login_required
 def post_detail(post_id):
+
+    dislike_form = DisLikeForm()
+    like_form = LikeForm()
     comment_form = CommentForm()
     reply_form = ReplyForm()
     post = Post.query.get_or_404(post_id)
+    existing_like = Like.query.filter_by(user_id=current_user.id, post_id=post.id).first()
+
     if comment_form.validate_on_submit():
         comment = Comment(content=comment_form.content.data, post=post, owner=current_user)
         db.session.add(comment)
         db.session.commit()
         flash('Your comment added successfully', 'success')
         return redirect(url_for('post_detail', post_id=post.id))
-    return render_template('post_detail.html', post=post, comment_form=comment_form, reply_form=reply_form)
+    return render_template('post_detail.html', post=post, comment_form=comment_form,
+                            reply_form=reply_form ,like_form=like_form, dislike_form=dislike_form, existing_like=existing_like)
+
 
 @app.route('/reply/<int:comment_id>', methods=['GET', 'POST'])
 def reply(comment_id):
@@ -150,7 +157,8 @@ def reply(comment_id):
         db.session.add(reply)
         db.session.commit()
         return redirect(url_for('post_detail', post_id=comment.post.id))
-    return render_template('post_detail.html', comment=comment, post=comment.post, comment_form=comment_form, reply_form=reply_form)
+    return render_template('post_detail.html', comment=comment, post=comment.post,
+                            comment_form=comment_form, reply_form=reply_form)
 
 
 @app.route('/post/delete/<int:post_id>')
@@ -192,3 +200,29 @@ def delete_reply(reply_id):
     return redirect(url_for('home'))
 
 
+@app.route('/like/<int:post_id>', methods=['POST'])
+def like(post_id):
+
+    like_form=LikeForm()
+    post = Post.query.get_or_404(post_id)
+
+    if current_user.id:
+        existing_like = Like.query.filter_by(user_id=current_user.id, post_id=post.id).first()
+        if not existing_like and like_form.validate_on_submit():
+            new_like = Like(user=current_user, like=post)
+            db.session.add(new_like)
+            db.session.commit()
+        return redirect(url_for('post_detail', post_id=post.id))
+
+@app.route('/unlike/<int:post_id>', methods=['POST'])
+def unlike(post_id):
+
+    dislike_form=DisLikeForm()
+    post = Post.query.get_or_404(post_id)
+
+    if current_user.id:
+        existing_like = Like.query.filter_by(user_id=current_user.id, post_id=post.id).first()
+        if existing_like and dislike_form.validate_on_submit():
+            db.session.delete(existing_like)
+            db.session.commit()
+        return redirect(url_for('post_detail', post_id=post.id))

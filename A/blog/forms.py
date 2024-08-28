@@ -73,3 +73,10 @@ class CommentForm(FlaskForm):
 class ReplyForm(FlaskForm):
     text = TextAreaField('Reply')
     submit = SubmitField('Add Reply')
+
+
+class LikeForm(FlaskForm):
+    submit = SubmitField('Like')
+
+class DisLikeForm(FlaskForm):
+    submit = SubmitField('DisLike')

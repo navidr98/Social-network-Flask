@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, flash, request, abort
 from blog import app, db, bcrypt
-from blog.forms import RegistrationForm, LoginForm, EditProfileFrom, PostForm ,EditPostForm, CommentForm, ReplyForm, LikeForm, DisLikeForm, SearchForm
-from blog.models import User, Post, Comment, Reply, Like
+from blog.forms import RegistrationForm, LoginForm, EditProfileFrom, PostForm ,EditPostForm, CommentForm, ReplyForm, LikeForm, DisLikeForm, SearchForm, FollowForm, UnfollowForm
+from blog.models import User, Post, Comment, Reply, Like, Follow
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -154,7 +154,8 @@ def post_detail(post_id):
         flash('Your comment added successfully', 'success')
         return redirect(url_for('post_detail', post_id=post.id))
     return render_template('post_detail.html', post=post, comment_form=comment_form,
-                            reply_form=reply_form ,like_form=like_form, dislike_form=dislike_form, existing_like=existing_like)
+                            reply_form=reply_form ,like_form=like_form, dislike_form=dislike_form,
+                              existing_like=existing_like)
 
 
 @app.route('/reply/<int:comment_id>', methods=['GET', 'POST'])

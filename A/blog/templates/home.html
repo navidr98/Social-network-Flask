@@ -10,12 +10,13 @@
 
 {% block content %}
 
-    <h1>Search Posts</h1>
-    <form method="POST" action="{{ url_for('search_post') }}">
-        {{ form.hidden_tag() }}
-        {{ form.title.label }} {{ form.title(size=32) }}<br>
-        {{ form.submit() }}
-    </form>
+    <div class="search-container">
+        <form method="POST" action="{{ url_for('search_post') }}">
+            {{ form.hidden_tag() }}
+            {{ form.title(size=32) }}
+            {{ form.submit() }}
+        </form>
+    </div>
     
     <ul>
         {% for post in search_posts %}

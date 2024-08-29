@@ -15,6 +15,7 @@ class User(UserMixin, db.Model):
     comments = db.relationship('Comment', cascade="all, delete", backref='owner', lazy=True)
     replies = db.relationship('Reply', cascade="all, delete", backref='response', lazy=True)
     likes = db.relationship('Like', cascade="all, delete", backref='user', lazy=True)
+    follows = db.relationship('Like', cascade="all, delete", backref='flw_user', lazy=True)
    
     def __repr__(self):
         return f'{self.__class__.__name__}({self.id} - {self.username})'
@@ -57,3 +58,8 @@ class Like(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+
+class Follow(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('current_user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

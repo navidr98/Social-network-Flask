@@ -4,14 +4,15 @@
 
 {% block content %}
     
-    <div class="content">
+    <div class="posts">
         <div class="post">
             <p><b>Posted by {{ post.author.username|upper }}</b></p>
             <b>
-                <p class="title">{{ post.title }} - {{ post.date.strftime('%Y-%m-%d') }}</p>
+            <p class="title">{{ post.title }} - {{ post.date.strftime('%Y-%m-%d') }}</p>
             </b>
-            <div class="content">
-                <p>{{ post.content }} - Likes: {{ post.likes|length }}</p>
+            <p>{{ post.content }} - Likes: {{ post.likes|length }}</p>
+
+            <div class="likes">
                 {% if existing_like %}
                     <form method="POST" action="{{ url_for('unlike', post_id=post.id) }}">
                         {{ dislike_form.csrf_token }}
@@ -23,8 +24,25 @@
                         {{ like_form.submit }}
                     </form>
                 {% endif %}
-                
             </div>
+
+            <div class="follows">
+                {% if existing_follow %}
+                    <form method="POST" action="{{ url_for('follow', post_id=post.id) }}">
+                        {{ unfollow_form.csrf_token }}
+                        {{ unfollow_form.submit }}
+                    </form>
+                {% else %}
+                    <form method="POST" action="{{ url_for('unfollow', post_id=post.id) }}">
+                        {{ follow_form.csrf_token }}
+                        {{ follow_form.submit }}
+                    </form>
+                {% endif %}
+            </div>
+                
+                
+        </div>
+        
 
             {% if post.author == current_user %}
                 <a href="{{ url_for('edit_post', post_id=post.id) }}" class="btn btn-info">Edit Post</a><br><br>
@@ -32,27 +50,30 @@
             {% endif %}
             <hr>
             
-            <h3>Comments</h3>
-            <form action="" method="post">
+            <div class="comments">
+                {% if post.comments %}
+                    <h3>Comments</h3>
+                {% endif %}
+                <form action="" method="post">
 
-                {{ comment_form.csrf_token }}
-                {{ comment_form.hidden_tag() }}
-                {{ comment_form.content(class='form-control') }}<br>
-                {{ comment_form.submit }}
-            </form>
-        
-            {% for comment in post.comments %}
-                <div class="comment">
-                    <p>Comment by {{ comment.owner.username|upper }} - {{ comment.date.strftime('%Y-%m-%d') }}</p>
-                    <p>{{ comment.content }}</p>
-                    {% if comment.owner == current_user %}
-                                <a href="{{ url_for('delete_comment', comment_id=comment.id) }}" class="btn btn-danger">Delete comment</a>
-                            {% endif %}
-                    
-                    {% if comment.replies %}
-                        <h4>Replies</h4>
-                    {% endif %}
-                    
+                    {{ comment_form.csrf_token }}
+                    {{ comment_form.hidden_tag() }}
+                    {{ comment_form.content(class='form-control') }}<br>
+                    {{ comment_form.submit }}
+                </form>
+            
+                {% for comment in post.comments %}
+                <p>Comment by {{ comment.owner.username|upper }} - {{ comment.date.strftime('%Y-%m-%d') }}</p>
+                <p>{{ comment.content }}</p>
+                {% if comment.owner == current_user %}
+                            <a href="{{ url_for('delete_comment', comment_id=comment.id) }}" class="btn btn-danger">Delete comment</a>
+                        {% endif %}
+                
+                {% if comment.replies %}
+                    <h4>Replies</h4>
+                {% endif %}
+                
+                <div class="replies">
                     <form action="{{ url_for('reply', comment_id=comment.id) }}" method="post">
                         {{ reply_form.csrf_token }}
                         {{ reply_form.text(class='form-control') }}<br>
@@ -70,10 +91,10 @@
                         </div>
                         
                     {% endfor %}
-                    
                 </div>
-            {% endfor %}<hr>
+                {% endfor %}<hr>
 
+                </div>
             
             
         </div>

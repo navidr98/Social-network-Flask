@@ -60,7 +60,6 @@ class PostForm(FlaskForm):
     content = TextAreaField('Content', validators=[DataRequired()])
     submit = SubmitField('Post')
 
-
 class EditPostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     content = TextAreaField('Content', validators=[DataRequired()])
@@ -74,13 +73,20 @@ class ReplyForm(FlaskForm):
     text = TextAreaField('Reply')
     submit = SubmitField('Add Reply')
 
-
 class LikeForm(FlaskForm):
     submit = SubmitField('Like')
 
 class DisLikeForm(FlaskForm):
     submit = SubmitField('DisLike')
 
+class FollowForm(FlaskForm):
+    submit = SubmitField('Follow')
+
+class UnfollowForm(FlaskForm):
+    submit = SubmitField('Unfollow')
+
 class SearchForm(FlaskForm):
-    title = StringField('Search by Title', validators=[DataRequired(message="please enter any title")])
-    submit = SubmitField('Search')
+    title = StringField('Search by Title', render_kw={'class': 'search-input', 'placeholder': 'Search by title'})
+    submit = SubmitField('Search', render_kw={'class': 'search-button'})
+
+

@@ -50,11 +50,10 @@ div.left{
     display: block;
     height: 39px;
     border-radius: 20px;
-    margin-top: 100px;
+    margin-top: 50px;
     transition: all 0.5s ease-in-out;
     border: none;
     text-transform: uppercase;
-    position: absolute;
     left: 8%;
 }
 .sign-in:hover {
@@ -101,4 +100,18 @@ div.left{
 .log{
     color: #7def4c;
     font-size: 20px;
+}
+
+.error-message {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    }
+    
+.error-message p {
+    margin: 0;
 }

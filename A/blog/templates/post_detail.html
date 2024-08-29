@@ -16,30 +16,15 @@
                 {% if existing_like %}
                     <form method="POST" action="{{ url_for('unlike', post_id=post.id) }}">
                         {{ dislike_form.csrf_token }}
-                        {{ dislike_form.submit }}
+                        {{ dislike_form.submit(class="dislike-button") }}
                     </form>
                 {% else %}
                     <form method="POST" action="{{ url_for('like', post_id=post.id) }}">
                         {{ like_form.csrf_token }}
-                        {{ like_form.submit }}
+                        {{ like_form.submit(class="like-button") }}
                     </form>
                 {% endif %}
-            </div>
-
-            <div class="follows">
-                {% if existing_follow %}
-                    <form method="POST" action="{{ url_for('follow', post_id=post.id) }}">
-                        {{ unfollow_form.csrf_token }}
-                        {{ unfollow_form.submit }}
-                    </form>
-                {% else %}
-                    <form method="POST" action="{{ url_for('unfollow', post_id=post.id) }}">
-                        {{ follow_form.csrf_token }}
-                        {{ follow_form.submit }}
-                    </form>
-                {% endif %}
-            </div>
-                
+            </div>                
                 
         </div>
         

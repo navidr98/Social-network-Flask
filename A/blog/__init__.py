@@ -9,10 +9,9 @@ app.config['SECRET_KEY'] = '2409754aaf7cb3764fd79d401f9b408b'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../blog.db'
 
-app.config['RECAPTCHA_USE_SSL'] = False
-app.config['RECAPTCHA_PUBLIC_KEY'] = 'public'
-app.config['RECAPTCHA_PRIVATE_KEY'] = 'private'
-app.config['RECAPTCHA_OPTIONS'] = {'theme': 'white'}
+app.config['SECRET_KEY'] = '\xf0?a\x9a\\\xff\xd4;\x0c\xcbHi' # Replace with your own secret key
+app.config['RECAPTCHA_PUBLIC_KEY'] = '6Lez6zEqAAAAAEOsCQYAQS4myQ7U8I_IALpF3jMj' # Replace with your reCAPTCHA site key
+app.config['RECAPTCHA_PRIVATE_KEY'] = '6Lez6zEqAAAAAMZfC6t6wBXzHFQm7lmNGcUEazR_' # Replace with your reCAPTCHA secret key
 
 
 db = SQLAlchemy(app)

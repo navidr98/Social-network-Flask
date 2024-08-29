@@ -21,9 +21,9 @@
 }
 .logo{
     position: absolute;
-    left: 42%;
+    left: 40%;
     height: 30%;
-    top: 0%;
+    top: 10%;
 }
 #menu{
     opacity: 0;

@@ -8,8 +8,8 @@
 
 {% block content %}
 <div class="wrapper">
-    {% include 'includes/form_errors.html' %}
-    <img class="logo" src="../static/images/logo2.png" alt="">
+    {% include 'includes/form_errors.html' %}<br><br>
+    <a href="{{ url_for('home') }}"><img class="logo" src="../static/images/logo2.png" alt=""></a>
     <div class="form-login">
         <form action="" method="post">
 
@@ -17,24 +17,8 @@
             {{ form.email.label(class='form-label') }} {{ form.email(class='box-form') }}
             {{ form.password.label(class='form-label') }} {{ form.password(class='box-form') }}
             {{ form.remember_me.label(class='remember') }} {{ form.remember_me }}<br>
-            <div class="captcha-chat">
-                <div class="captcha-container media">
-                    <div id="captcha">
-                        <div class="controls">
-                            <input class="user-text btn-common" placeholder="Type here" type="text" />
-                            <button class="validate btn-common">
-                                <!-- this image should be converted into inline svg -->
-                                <img src="../static/images/enter_icon.png" alt="submit icon">
-                            </button>
-                            <button class="refresh btn-common">
-                                <!-- this image should be converted into inline svg -->
-                                <img src="../static/images/refresh_icon.png" alt="refresh icon">
-                            </button>
-                        </div>
-                    </div>
-                    <p class="wrong info">Wrong!, please try again.</p>
-                </div>
-            </div>
+            {{ form.recaptcha() }}
+            
             {{ form.submit(class='log-in')}}
             <div class="sign-up">
                 <a href="{{ url_for('register') }}">Do not Have An Account?</a>

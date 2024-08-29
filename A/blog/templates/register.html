@@ -2,25 +2,43 @@
 
 {% block title %}Register{% endblock %}
 
-{% block content %}
-    {% include 'includes/form_errors.html' %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
+{% endblock %}
 
-    <div>
+{% block content %}
+<div class="wrapper">
+    <div >{% include 'includes/form_errors.html' %}</div>
+
+    <div class="left">
+        
+        <div class="sign-up">
+            <h1 class="head">Sign up</h1>
+        </div>
         <form action="" method="post">
 
             {{ form.csrf_token }}
 
-            <div>{{ form.username.label(class='form-control-label ') }}: {{ form.username(class='form-control') }}</div>
+            {{ form.username.label(class='form-label') }} {{ form.username(class='box-form') }}
     
-            {{ form.email.label(class='form-control-label') }}: {{ form.email(class='form-control') }}
+            {{ form.email.label(class='form-label') }} {{ form.email(class='box-form') }}
     
-            {{ form.password.label(class='form-control-label') }}:  {{ form.password(class='form-control') }}
+            {{ form.password.label(class='form-label') }}  {{ form.password(class='box-form') }}
     
-            {{ form.confirm_password.label(class='form-control-label') }}:  {{ form.confirm_password(class='form-control') }}
+            {{ form.confirm_password.label(class='form-label') }}  {{ form.confirm_password(class='box-form') }}
             
-            {{ form.submit }}
+            {{ form.submit(class='sign-in') }}
     
         </form>
     </div>
+    <div class="right">
+        <div class="img">
+            <img class="image" src="../static/images/Adult talking cell phone-cuate.png" alt="">
+        </div>
+        <div class="log-in">
+            <a class="log" href="{{ url_for('login') }}">Already Have An Account?</a>
+        </div>
+    </div>
+</div>    
 
 {% endblock %}

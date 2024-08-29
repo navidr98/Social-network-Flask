@@ -30,6 +30,7 @@ class LoginForm(FlaskForm):
     email = StringField('Email',validators=[DataRequired(), Email(message='Enter valid email like exampel@mail.com')])
     password = PasswordField('Password',validators=[DataRequired(), Length(min=4, max=30, message='Enter password contains 4 charachter at least')])
     remember_me = BooleanField('remember me')
+    recaptcha = RecaptchaField()
     submit = SubmitField('Login')
 
 

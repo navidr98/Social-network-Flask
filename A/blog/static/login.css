@@ -1,6 +1,6 @@
 @font-face {
     font-family: sans;
-    src: url(./font/samsungsharpsans-medium.otf);
+    src: url(./font/BYekan+.ttf);
 }
 *{
     padding: 0;
@@ -21,9 +21,9 @@
 }
 .logo{
     position: absolute;
-    left: 40%;
+    left: 42%;
     height: 30%;
-    top: 10%;
+    top: 0%;
 }
 #menu{
     opacity: 0;
@@ -81,7 +81,7 @@
 }
 .remember{
     font-size: 14px;
-    margin-left: 300px;
+    margin-right: 280px;
 }
 p.wrong {
     display: none;
@@ -122,17 +122,18 @@ p.wrong.shake {
     height: 20px;
 }
 .captcha-chat{
-    padding-left: 20%;
-    padding-top: 10px;
+    padding-right: 20%;
+    padding-top: 35px;
+    padding-bottom: 25px;
 }
 .sign-up{
     padding-top: 20px;
-    padding-left: 105px;
+    padding-right: 32%;
 }
 .sign-up>a{
     color: #7def4c;
 }
 .user-text{
     width: 150px;
-    margin-left: 20px;
+    margin-left: 13px;
 }

@@ -1,6 +1,6 @@
 @font-face {
     font-family: sans;
-    src: url(./font/samsungsharpsans-medium.otf);
+    src: url(./font/BYekan+.ttf);
 }
 *{
     padding: 0;
@@ -9,4 +9,82 @@
     list-style: none;
     box-sizing: border-box;
     font-family: sans;
+    direction: rtl;
+}
+.logbtn{
+    position: absolute;
+    padding: 10px;
+    left: 10px;
+    text-decoration: none;
+    top: 6px;
+    color: #70b353;
+}
+.reg{
+    position: absolute;
+    padding: 10px;
+    left: 60px;
+    border-left: 1px solid gray;
+    text-decoration: none;
+    top: 6px;
+    color:#505050 ;
+}
+#menu{
+    background-color: white;
+    height: 60px;
+    border-bottom: 2px solid #7def4c;
+}
+.logbtn:hover{
+    color: #78ce53;
+    text-decoration: underline;
+}
+.logo-{
+    height:52px ;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+.home{
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    position: absolute;
+    right:75px;
+    top: 13px;
+    font-size: 24px;
+}
+.out{
+    position: absolute;
+    padding-right: 5px;
+    left: 18px;
+    text-decoration: none;
+    top: 18px;
+    color:black ;
+}
+.prof{
+    position: absolute;
+    padding-left: 8px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-left: 1px solid gray;
+    left: 60px;
+    text-decoration: none;
+    top: 15px;
+    color: black;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.search-button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 16px;
+}
+
+.search-button:hover {
+    background-color: #45a049;
 }

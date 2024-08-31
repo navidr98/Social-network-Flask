@@ -1,0 +1,17 @@
+@font-face {
+    font-family: sans;
+    src: url(./font/BYekan+.ttf);
+}
+*{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+    font-family: sans;
+}
+#error{
+    position: absolute;
+    width: 400px;
+    right: 2%;
+}

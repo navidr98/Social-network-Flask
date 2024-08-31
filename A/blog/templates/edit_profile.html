@@ -11,14 +11,14 @@
     <form action="" method="post">
 
         {{ form.csrf_token }} 
-        {{ form.username.label }} {{ form.username }}
+        {{ form.username.label }}<br> {{ form.username }}
         {{ form.submit_user }}
         <hr>
-        {{ form.email.label }} {{ form.email }}
+        {{ form.email.label }}<br> {{ form.email }}
         {{ form.submit_email }}
         <hr>
-        {{ form.password.label }} {{ form.password }}
-        {{ form.confirm_password.label }} {{ form.confirm_password }}
+        {{ form.password.label }}<br> {{ form.password }}<br>
+        {{ form.confirm_password.label }}<br> {{ form.confirm_password }}
         {{ form.submit_pass }}
 
     </form>

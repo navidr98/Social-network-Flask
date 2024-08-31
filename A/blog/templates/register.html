@@ -13,9 +13,9 @@
     <div class="left">
         
         <div class="sign-up">
-            <h1 class="head">Sign up</h1>
+            <h1 class="head">ثبت نام</h1>
         </div>
-        <form action="" method="post">
+        <form action="" method="post" novalidate>
 
             {{ form.csrf_token }}
 
@@ -36,7 +36,7 @@
             <img class="image" src="../static/images/Adult talking cell phone-cuate.png" alt="">
         </div>
         <div class="log-in">
-            <a class="log" href="{{ url_for('login') }}">Already Have An Account?</a>
+            <a class="log" href="{{ url_for('login') }}">از قبل حساب کاربری دارید ؟</a>
         </div>
     </div>
 </div>    

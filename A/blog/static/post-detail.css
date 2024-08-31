@@ -1,0 +1,363 @@
+@font-face {
+    font-family: sans;
+    src: url(./font/BYekan+.ttf);
+}
+*{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+    font-family: sans;
+}
+.boxi{
+    height: 200px;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid rgb(55, 84, 55);
+}
+.like{
+    height: 100px;
+    display: inline-block;
+    vertical-align: top;
+    position: absolute;
+    left: 14%;
+
+}
+.time{
+    height: 50px;
+    display: inline-block;
+}
+.edit-del{
+    height: 150px;
+    position: relative;
+}
+.buttlike{
+    position: absolute;
+    left: 70px;
+    top: 362px;
+}
+.btvir {
+    margin-right: 30px;
+    margin-top: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgb(20, 20, 20);
+    border: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+    cursor: pointer;
+    transition-duration: 0.3s;
+    overflow: hidden;
+    position: absolute;
+    left: 1%;
+    text-decoration: none !important;
+  }
+  
+  .edit-svgIcon {
+    width: 17px;
+    transition-duration: 0.3s;
+  }
+  
+  .edit-svgIcon path {
+    fill: rgb(255, 255, 255);
+  }
+  
+  .btvir:hover {
+    width: 150px;
+    border-radius: 50px;
+    transition-duration: 0.3s;
+    background-color: rgb(179, 249, 122);
+    align-items: center;
+    z-index: 200;
+  }
+  
+  .btvir:hover .edit-svgIcon {
+    width: 20px;
+    transition-duration: 0.3s;
+    transform: translateY(60%);
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+  
+  .btvir::before {
+    display: none;
+    content: "ویرایش پست";
+    color: white;
+    transition-duration: 0.3s;
+    font-size: 2px;
+  }
+  
+  .btvir:hover::before {
+    display: block;
+    padding-right: 10px;
+    font-size: 13px;
+    opacity: 1;
+    transform: translateY(0px);
+    transition-duration: 0.3s;
+  }
+
+.btdel{
+    width: 40px;
+    height: 39px;
+    border-radius: 50%;
+    background-color: rgb(20, 20, 20);
+    border: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+    cursor: pointer;
+    transition-duration: .3s;
+    overflow: hidden;
+    position: absolute;
+    left:5% ;
+    top: 14%;
+}
+.svgIcon {
+    width: 12px;
+    transition-duration: .3s;
+  }
+  
+  .svgIcon path {
+    fill: white;
+  }
+  .btdel:hover {
+    width: 140px;
+    border-radius: 50px;
+    transition-duration: .3s;
+    background-color: rgb(239, 166, 143);
+    align-items: center;
+  }
+  
+  .btdel:hover .svgIcon {
+    width: 50px;
+    transition-duration: .3s;
+    transform: translateY(60%);
+  }
+  
+  .btdel::before {
+    position: absolute;
+    top: -20px;
+    content: "حذف پست";
+    color: white;
+    transition-duration: .3s;
+    font-size: 2px;
+  }
+  
+  .btdel:hover::before {
+    font-size: 13px;
+    opacity: 1;
+    transform: translateY(30px);
+    transition-duration: .3s;
+  }
+
+.comment{
+    height: 200px;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid rgb(55, 84, 55);
+    width: 100%;
+}
+.sub {
+    position: relative;
+    width: 150px;
+    height: 55px;
+    border-radius: 45px;
+    border: none;
+    background-color: rgb(121, 252, 202);
+    color: rgb(0, 0, 0);
+    box-shadow: 0px 10px 10px rgb(187, 253, 191) inset,
+    0px 5px 10px rgba(5, 5, 5, 0.212),
+    0px -10px 10px rgb(54, 255, 111) inset;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 43%;
+  }
+  
+  .sub::before {
+    width: 70%;
+    height: 2px;
+    position: absolute;
+    background-color: rgba(250, 250, 250, 0.678);
+    content: "";
+    filter: blur(1px);
+    top: 7px;
+    border-radius: 50%;
+  }
+  
+  .sub::after {
+    width: 70%;
+    height: 2px;
+    position: absolute;
+    background-color: rgba(250, 250, 250, 0.137);
+    content: "";
+    filter: blur(1px);
+    bottom: 7px;
+    border-radius: 50%;
+  }
+  
+  .sub:hover {
+    animation: jello-horizontal 0.9s both;
+  }
+  
+  @keyframes jello-horizontal {
+    0% {
+      transform: scale3d(1, 1, 1);
+    }
+  
+    30% {
+      transform: scale3d(1.25, 0.75, 1);
+    }
+  
+    40% {
+      transform: scale3d(0.75, 1.25, 1);
+    }
+  
+    50% {
+      transform: scale3d(1.15, 0.85, 1);
+    }
+  
+    65% {
+      transform: scale3d(0.95, 1.05, 1);
+    }
+  
+    75% {
+      transform: scale3d(1.05, 0.95, 1);
+    }
+  
+    100% {
+      transform: scale3d(1, 1, 1);
+    }
+  }
+
+  .Btn {
+    width: 140px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border: none;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.089);
+    cursor: pointer;
+    background-color: transparent;
+    direction: ltr;
+    position: absolute;
+    top: 0;
+  }
+  
+  .leftContainer {
+    width: 60%;
+    height: 100%;
+    background-color: rgb(238, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .leftContainer .like {
+    color: white;
+    font-weight: 600;
+  }
+  
+  .likeCount {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(238, 0, 0);
+    font-weight: 600;
+    position: relative;
+    background-color: white;
+  }
+  
+  .likeCount::before {
+    height: 8px;
+    width: 8px;
+    position: absolute;
+    content: "";
+    background-color: rgb(255, 255, 255);
+    transform: rotate(45deg);
+    left: -4px;
+  }
+  
+  .Btn:hover .leftContainer {
+    background-color: rgb(219, 0, 0);
+  }
+  
+  .Btn:active .leftContainer {
+    background-color: rgb(201, 0, 0);
+  }
+  
+  .Btn:active .leftContainer svg {
+    transform: scale(1.15);
+    transform-origin: top;
+  }
+.first{
+    height: 200px;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid rgb(55, 84, 55);
+    margin-right: 25px;
+}
+.del {
+    position: relative;
+    width: 150px;
+    height: 55px;
+    border-radius: 45px;
+    border: none;
+    background-color: rgb(255, 97, 147);
+    color: rgb(0, 0, 0);
+    box-shadow: 0px 10px 10px rgb(253, 187, 239) inset,
+    0px 5px 10px rgba(5, 5, 5, 0.212),
+    0px -10px 10px rgb(255, 54, 128) inset;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 43%;
+    text-decoration: none;
+  }
+  
+  .del::before {
+    width: 70%;
+    height: 2px;
+    position: absolute;
+    background-color: rgba(250, 250, 250, 0.678);
+    content: "";
+    filter: blur(1px);
+    top: 7px;
+    border-radius: 50%;
+  }
+  
+  .del::after {
+    width: 70%;
+    height: 2px;
+    position: absolute;
+    background-color: rgba(250, 250, 250, 0.137);
+    content: "";
+    filter: blur(1px);
+    bottom: 7px;
+    border-radius: 50%;
+  }
+ .second{
+    height: 200px;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid rgb(55, 84, 55);
+    margin-right: 50px;
+ } 

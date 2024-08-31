@@ -6,22 +6,22 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
 {% endblock %}
 
+
 {% block content %}
 <div class="wrapper">
-    {% include 'includes/form_errors.html' %}<br><br>
+    {% include 'includes/form_errors.html' %}
     <a href="{{ url_for('home') }}"><img class="logo" src="../static/images/logo2.png" alt=""></a>
     <div class="form-login">
-        <form action="" method="post">
+        <form action="" method="post" novalidate>
 
             {{ form.csrf_token }}
-            {{ form.email.label(class='form-label') }} {{ form.email(class='box-form') }}
+            {{ form.email.label(class='form-label') }}{{ form.email(class='box-form') }}
             {{ form.password.label(class='form-label') }} {{ form.password(class='box-form') }}
-            {{ form.remember_me.label(class='remember') }} {{ form.remember_me }}<br>
+            {{ form.remember_me.label(class='remember') }} {{ form.remember_me }}<br><br>
             {{ form.recaptcha() }}
-            
             {{ form.submit(class='log-in')}}
             <div class="sign-up">
-                <a href="{{ url_for('register') }}">Do not Have An Account?</a>
+                <a href="{{ url_for('register') }}">می‌خواهم ثبت نام کنم</a>
             </div>
 
         </form>

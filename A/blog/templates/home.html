@@ -10,13 +10,16 @@
 
 {% block content %}
 
-    <div class="search-container">
+    <div class="search-box">
         <form method="POST" action="{{ url_for('search_post') }}">
-            {{ form.hidden_tag() }}
-            {{ form.title(size=32) }}
-            {{ form.submit() }}
+        {{ form.hidden_tag() }}
+        <div class="InputContainer">
+        {{ form.title(class='box-search',placeholder='جستجو بر اساس عنوان') }}
+        </div>
+        {{ form.submit(class='search') }}
         </form>
-    </div>
+    </div>    
+        
     
     <ul>
         {% for post in search_posts %}
@@ -37,21 +40,21 @@
             </li>
         {% endfor %}
     </ul>
-    </ul><br><br><hr>
+    </ul><br><br><hr class="hr">
 
-    <h3>ALL POSTS</h3>
+    <h3>پست‌ها</h3>
     <div class="content">
         {% for post in posts %}
             <div class="post">
-                    <p class="title">
-                        <a href="{{ url_for('post_detail', post_id=post.id) }}">
-                            {{ post.title }}
-                        </a>
-                    </p>
+                <p class="title">
+                    <a href="{{ url_for('post_detail', post_id=post.id) }}">
+                        عنوان: {{ post.title }}
+                    </a>
+                </p>
                 <div class="content">
-                    <p>{{ post.content }}</p>
+                    <p>{{ post.content }}</p><br>
                 </div>
-                <hr>
+                <hr class="hr2">
             </div>
         {% endfor %}
     </div>

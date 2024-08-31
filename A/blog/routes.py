@@ -1,13 +1,15 @@
 from flask import render_template, redirect, url_for, flash, request, abort
 from blog import app, db, bcrypt
-from blog.forms import RegistrationForm, LoginForm, EditProfileFrom, PostForm ,EditPostForm, CommentForm, ReplyForm, LikeForm, DisLikeForm, SearchForm, FollowForm, UnfollowForm
-from blog.models import User, Post, Comment, Reply, Like, Follow
+from blog.forms import RegistrationForm, LoginForm, EditProfileFrom, PostForm ,EditPostForm, CommentForm, ReplyForm, LikeForm, DisLikeForm, SearchForm
+from blog.models import User, Post, Comment, Reply, Like
 from flask_login import login_user, current_user, logout_user, login_required
+from flask_dance.contrib.google import google
+import jdatetime
+
 
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/home', methods=['GET', 'POST'])
-@login_required
 def home():
     form = SearchForm()
     posts = Post.query.all()
@@ -35,9 +37,11 @@ def register():
         db.session.add(user)
         db.session.commit()
         next_page = request.args.get('next')
-        flash('You registered successfully', 'success')
+        flash('ثبت نام شما با موفقیت انجام شد', 'success')
         return redirect(next_page if next_page else url_for('home'))
     return render_template('register.html', form=form)
+
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -51,18 +55,27 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember_me.data)
             next_page = request.args.get('next')
-            flash('You logged in successfully', 'success')
+            flash('ورود شما با موفقیت انجام شد', 'success')
             return redirect(next_page if next_page else url_for('home'))
         else:
-            flash('Email or Password is wrong', 'danger')
+            flash('نام کاربری یا رمز عبور اشتباه است', 'danger')
     return render_template('/login.html', form=form)
+
+@app.route('/google_login')
+def google_login():
+    if not google.authorized:
+        return redirect(url_for('google.login'))
+    resp = google.get('/plus/v1/people/me')
+    assert resp.ok, resp.text
+    return f'You are logged in as: {resp.json()["displayName"]}'
+
 
 
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
-    flash('You logged out successfully', 'success')
+    flash('از حساب خود با موفقیت خارج شدید', 'success')
     return redirect(url_for('home'))
 
 
@@ -82,14 +95,14 @@ def edit_profile():
             current_user.username = form.username.data
             current_user.email = form.email.data
             db.session.commit()
-            flash('Your profile has been updated','info')
+            flash('نام کاری شما حساب شما با موفقیت بروزرسانی شد','info')
             return redirect(url_for('edit_profile'))
     
         elif form.submit_pass.data:
             hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
             current_user.password = hashed_password
             db.session.commit()
-            flash('Your password has been updated','info')
+            flash('رمز عبور حساب شما با موفقیت بروزرسانی شد','info')
             return redirect(url_for('edit_profile'))
     
     elif request.method == 'GET':
@@ -107,7 +120,7 @@ def new_post():
         post = Post(title=form.title.data, content=form.content.data, author=current_user)
         db.session.add(post)
         db.session.commit()
-        flash('Your post created successfully', 'success')
+        flash('پست شما با موفقیت ثبت شد', 'success')
         return redirect(url_for('profile', user_id=current_user.id))
     return render_template('create_post.html', form=form)
 
@@ -126,7 +139,7 @@ def edit_post(post_id):
         post.title = form.title.data
         post.content = form.content.data
         db.session.commit()
-        flash('Post updated successfully', 'success')
+        flash('پست شما با موفقیت تغییر یافت', 'success')
         return redirect(url_for('post_detail', post_id=post.id))
 
     elif request.method == 'GET':
@@ -145,17 +158,18 @@ def post_detail(post_id):
     comment_form = CommentForm()
     reply_form = ReplyForm()
     post = Post.query.get_or_404(post_id)
+    post_date = jdatetime.datetime.fromgregorian(datetime=post.date).strftime('%Y-%m-%d %H:%M')
     existing_like = Like.query.filter_by(user_id=current_user.id, post_id=post.id).first()
 
     if comment_form.validate_on_submit():
         comment = Comment(content=comment_form.content.data, post=post, owner=current_user)
         db.session.add(comment)
         db.session.commit()
-        flash('Your comment added successfully', 'success')
+        flash('نظر شما با موفقیت شد', 'success')
         return redirect(url_for('post_detail', post_id=post.id))
     return render_template('post_detail.html', post=post, comment_form=comment_form,
                             reply_form=reply_form ,like_form=like_form, dislike_form=dislike_form,
-                              existing_like=existing_like)
+                              existing_like=existing_like,post_date=post_date)
 
 
 @app.route('/reply/<int:comment_id>', methods=['GET', 'POST'])
@@ -167,6 +181,7 @@ def reply(comment_id):
         reply = Reply(text=reply_form.text.data, comment=comment, response=current_user)
         db.session.add(reply)
         db.session.commit()
+        flash('پاسخ شما با موفقیت شد', 'success')
         return redirect(url_for('post_detail', post_id=comment.post.id))
     return render_template('post_detail.html', comment=comment, post=comment.post,
                             comment_form=comment_form, reply_form=reply_form)
@@ -181,7 +196,7 @@ def delete_post(post_id):
         abort(403)
     db.session.delete(post)
     db.session.commit()
-    flash('Post deleted successfully', 'success')
+    flash('پست شما با موفقیت حذف شد', 'success')
     return redirect(url_for('home'))
 
 
@@ -194,7 +209,7 @@ def delete_comment(comment_id):
         abort(403)
     db.session.delete(comment)
     db.session.commit()
-    flash('Comment deleted successfully', 'success')
+    flash('نظر شما با موفقیت حذف شد', 'success')
     return redirect(url_for('home'))
 
 
@@ -207,7 +222,7 @@ def delete_reply(reply_id):
         abort(403)
     db.session.delete(reply)
     db.session.commit()
-    flash('Reply deleted successfully', 'success')
+    flash('پاسخ شما با موفقیت حذف شد', 'success')
     return redirect(url_for('home'))
 
 
@@ -238,4 +253,3 @@ def unlike(post_id):
             db.session.commit()
         return redirect(url_for('post_detail', post_id=post.id))
     
-

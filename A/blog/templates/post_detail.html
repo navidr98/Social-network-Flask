@@ -1,85 +1,110 @@
+
 {% extends 'base.html' %}
 
 {% block title %}Home{% endblock %}
 
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='post-detail.css') }}">
+{% endblock %}
+
 {% block content %}
     
-    <div class="posts">
+    <div class="content">
         <div class="post">
-            <p><b>Posted by {{ post.author.username|upper }}</b></p>
-            <b>
-            <p class="title">{{ post.title }} - {{ post.date.strftime('%Y-%m-%d') }}</p>
-            </b>
-            <p>{{ post.content }} - Likes: {{ post.likes|length }}</p>
+            <div class="content">
+                <b>
+                    <p class="title">عنوان پست {{ post.title }} <br>تاریخ ثبت پست {{ post_date }}</p></b>  
+                    <p><b>پست توسط {{ post.author.username|upper }} ثبت شده</p>
 
-            <div class="likes">
-                {% if existing_like %}
+                <p class="boxi">{{ post.content }} </p>
+                <div class="time"> 
+                </div>
+                <div class="like">
+                {% if existing_like %}                 
                     <form method="POST" action="{{ url_for('unlike', post_id=post.id) }}">
                         {{ dislike_form.csrf_token }}
-                        {{ dislike_form.submit(class="dislike-button") }}
+                        <button class="Btn">
+                            <span class="leftContainer">
+                              <svg fill="white" viewBox="0 0 512 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"></path></svg>
+                              <span class="like">Like</span>
+                            </span>
+                            <span class="likeCount">
+                                {{ post.likes|length }}
+                            </span>
+                          </button>
                     </form>
+                    
                 {% else %}
                     <form method="POST" action="{{ url_for('like', post_id=post.id) }}">
                         {{ like_form.csrf_token }}
-                        {{ like_form.submit(class="like-button") }}
+                        <button class="Btn">
+                            <span class="leftContainer">
+                              <svg fill="white" viewBox="0 0 512 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"></path></svg>
+                              <span class="like">Like</span>
+                            </span>
+                            <span class="likeCount">
+                                {{ post.likes|length }}
+                            </span>
+                          </button>
                     </form>
                 {% endif %}
-            </div>                
-                
-        </div>
-        
+                </div>
+            </div>
 
             {% if post.author == current_user %}
-                <a href="{{ url_for('edit_post', post_id=post.id) }}" class="btn btn-info">Edit Post</a><br><br>
-                <a href="{{ url_for('delete_post', post_id=post.id) }}" class="btn btn-danger">Delete Post</a>
+            <div class="edit-del">
+                <a href="{{ url_for('edit_post', post_id=post.id) }}" class="btvir"><svg class="edit-svgIcon" viewBox="0 0 512 512">
+                    <path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"></path>
+                  </svg></a>
+                <a href="{{ url_for('delete_post', post_id=post.id) }}" class="btdel"><svg viewBox="0 0 448 512" class="svgIcon"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path></svg></a>
+            </div>    
             {% endif %}
             <hr>
             
-            <div class="comments">
-                {% if post.comments %}
-                    <h3>Comments</h3>
-                {% endif %}
-                <form action="" method="post">
+            <h3>نظرات</h3>
+            <form action="" method="post">
 
-                    {{ comment_form.csrf_token }}
-                    {{ comment_form.hidden_tag() }}
-                    {{ comment_form.content(class='form-control') }}<br>
-                    {{ comment_form.submit }}
-                </form>
-            
-                {% for comment in post.comments %}
-                <p>Comment by {{ comment.owner.username|upper }} - {{ comment.date.strftime('%Y-%m-%d') }}</p>
-                <p>{{ comment.content }}</p>
-                {% if comment.owner == current_user %}
-                            <a href="{{ url_for('delete_comment', comment_id=comment.id) }}" class="btn btn-danger">Delete comment</a>
-                        {% endif %}
-                
-                {% if comment.replies %}
-                    <h4>Replies</h4>
-                {% endif %}
-                
-                <div class="replies">
-                    <form action="{{ url_for('reply', comment_id=comment.id) }}" method="post">
-                        {{ reply_form.csrf_token }}
-                        {{ reply_form.text(class='form-control') }}<br>
-                        {{ reply_form.submit }}
-                    </form>
+                {{ comment_form.csrf_token }}
+                {{ comment_form.hidden_tag() }}
+                {{ comment_form.content(class='comment') }}<br>
+                {{ comment_form.submit(class='sub') }}
+            </form>
+        
+            {% for comment in post.comments %}
+                <div class="nazar">
+                    <p >نظر توسط {{ comment.owner.username|upper }} - {{ reply_date }}</p>
+                    <p class="first">{{ comment.content }}</p>
+                    {% if comment.owner == current_user %}
+                                <a href="{{ url_for('delete_comment', comment_id=comment.id) }}" class="del">حذف کامنت</a>
+                            {% endif %}
+                    
+                    {% if comment.replies %}
+                        <h4>پاسخ ها</h4>
+                    {% endif %}
+                    
+
 
                     {% for reply in comment.rep %}
-                        <div class="comment">
-                            <p> Replied by {{ reply.response.username }} - {{ reply.date.strftime('%Y-%m-%d') }}</p>
-                            <p>{{ reply.text }}</p>
+                        <div class="nazar">
+                            <p> پاسخ توسط {{ reply.response.username }} - {{ reply.date.strftime('%Y-%m-%d') }}</p>
+                            <p class="second">{{ reply.text }}</p>
                             {% if reply.response == current_user %}
-                                <a href="{{ url_for('delete_reply', reply_id=reply.id) }}" class="btn btn-danger">Delete Reply</a>
+                                <a href="{{ url_for('delete_reply', reply_id=reply.id) }}" class="del">حذف پاسخ</a>
                             {% endif %}
                             <hr>
                         </div>
+                    <form action="{{ url_for('reply', comment_id=comment.id) }}" method="post">
+                            {{ reply_form.csrf_token }}
+                            {{ reply_form.text(class='form-control') }}<br>
+                            {{ reply_form.submit(class='sub') }}
+                    </form>
+                        
                         
                     {% endfor %}
+                    
                 </div>
-                {% endfor %}<hr>
+            {% endfor %}<hr>
 
-                </div>
             
             
         </div>

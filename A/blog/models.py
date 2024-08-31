@@ -12,6 +12,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(30), unique=True,nullable=False)
     email = db.Column(db.String(45), unique=True, nullable=False)
     password = db.Column(db.String(30), nullable=False)
+    profile_picture = db.Column(db.String(150), default='prof.jpg')
     posts = db.relationship('Post', cascade="all, delete", backref='author', lazy=True)
     comments = db.relationship('Comment', cascade="all, delete", backref='owner', lazy=True)
     replies = db.relationship('Reply', cascade="all, delete", backref='response', lazy=True)

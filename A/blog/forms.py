@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, FileField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from blog.models import User
 from flask_wtf.recaptcha import RecaptchaField
@@ -40,6 +40,8 @@ class EditProfileFrom(FlaskForm):
     email = StringField('پست الکترونیک',validators=[Email(message='پست الکترونیک معتبر وارد کنید ')])
     password = PasswordField('رمز عبور',validators=[Length(max=30, message='رمز عبور حداقل شامل ۴ حرف باشد')])
     confirm_password = PasswordField('تکرار رمز عبور', validators=[EqualTo('password', message='رمز عبور همخوانی ندارد')])
+    profile_picture = FileField('عکس پروفایل')
+    submit_picture = SubmitField('آپلود عکس پرفایل')
     submit_user = SubmitField('به روز رسانی نام کاربری')
     submit_email = SubmitField('به روز رسانی پست الکترونیک')
     submit_pass = SubmitField('به روز رسانی رمز عبور')
@@ -86,4 +88,6 @@ class SearchForm(FlaskForm):
     title = StringField('Search by Title', validators=[DataRequired(message="بر اساس عنوان ")])
     submit = SubmitField('جستجو')
 
-    
+class ProfileForm(FlaskForm):
+    profile_picture = FileField('عکس پروفایل')
+    submit = SubmitField('آپلود')

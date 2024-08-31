@@ -11,9 +11,13 @@
     
     {% include 'includes/form_errors.html' %}
 
-    <form action="" method="post">
+    <form action="" method="post" novalidate>
 
         {{ form.csrf_token }} 
+
+        {{ form.profile_picture.label(class='label-prof') }} {{ form.profile_picture(class='input-style') }}
+        {{ form.submit_picture(class='sub-prof') }}
+        <hr class="hr2">
         {{ form.username.label(class='label-prof') }} {{ form.username(class='input-style') }}
         {{ form.submit_user(class='sub-prof') }}
         <hr class="hr2">

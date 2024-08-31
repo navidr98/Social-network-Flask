@@ -5,6 +5,7 @@ from blog.models import User, Post, Comment, Reply, Like
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_dance.contrib.google import google
 import jdatetime
+import os
 
 
 
@@ -90,19 +91,35 @@ def profile(user_id):
 def edit_profile():
     form = EditProfileFrom()
 
+    if form.profile_picture.data:
+        if form.submit_picture.data:
+            # picture_file = form.profile_picture.data
+            # picture_file.save(os.path.join(app.config['image'], picture_file.filename))
+            # current_user.profile_picture = picture_file.filename
+            # db.session.commit()
+            # flash('عکس پروفایل حساب شما با موفقیت بروزرسانی شد', 'success')
+            # return redirect(url_for('edit_profile'))
+            pass
+
     if form.validate_on_submit():
         if form.submit_user.data:
             current_user.username = form.username.data
+            db.session.commit()
+            flash('نام کاری شما حساب شما با موفقیت بروزرسانی شد','success')
+            return redirect(url_for('edit_profile'))
+        
+    if form.validate_on_submit():
+        if form.submit_email.data:
             current_user.email = form.email.data
             db.session.commit()
-            flash('نام کاری شما حساب شما با موفقیت بروزرسانی شد','info')
+            flash('پست الکترونیک شما حساب شما با موفقیت بروزرسانی شد','success')
             return redirect(url_for('edit_profile'))
     
-        elif form.submit_pass.data:
+    if form.submit_pass.data:
             hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
             current_user.password = hashed_password
             db.session.commit()
-            flash('رمز عبور حساب شما با موفقیت بروزرسانی شد','info')
+            flash('رمز عبور حساب شما با موفقیت بروزرسانی شد','success')
             return redirect(url_for('edit_profile'))
     
     elif request.method == 'GET':

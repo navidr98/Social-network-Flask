@@ -14,7 +14,7 @@
         <form method="POST" action="{{ url_for('search_post') }}">
         {{ form.hidden_tag() }}
         <div class="InputContainer">
-        {{ form.title(class='box-search',placeholder='جستجو بر اساس عنوان') }}
+        {{ form.title(class='box-search',placeholder='جستجو') }}
         </div>
         {{ form.submit(class='search') }}
         </form>
@@ -46,13 +46,13 @@
     <div class="content">
         {% for post in posts %}
             <div class="post">
-                <p class="title">
-                    <a href="{{ url_for('post_detail', post_id=post.id) }}">
-                        عنوان: {{ post.title }}
-                    </a>
-                </p>
+                    <p class="title">
+                        <a href="{{ url_for('post_detail', post_id=post.id) }}">
+                            {{ post.title }}
+                        </a>
+                    </p>
                 <div class="content">
-                    <p>{{ post.content }}</p><br>
+                    <p>{{ post.content }}</p>
                 </div>
                 <hr class="hr2">
             </div>

@@ -158,7 +158,8 @@ def post_detail(post_id):
     comment_form = CommentForm()
     reply_form = ReplyForm()
     post = Post.query.get_or_404(post_id)
-    post_date = jdatetime.datetime.fromgregorian(datetime=post.date).strftime('%Y-%m-%d %H:%M')
+    post_date = jdatetime.datetime.fromgregorian(datetime=post.date).strftime('%H:%M %d-%m-%Y ')
+
     existing_like = Like.query.filter_by(user_id=current_user.id, post_id=post.id).first()
 
     if comment_form.validate_on_submit():
@@ -170,6 +171,7 @@ def post_detail(post_id):
     return render_template('post_detail.html', post=post, comment_form=comment_form,
                             reply_form=reply_form ,like_form=like_form, dislike_form=dislike_form,
                               existing_like=existing_like,post_date=post_date)
+
 
 
 @app.route('/reply/<int:comment_id>', methods=['GET', 'POST'])

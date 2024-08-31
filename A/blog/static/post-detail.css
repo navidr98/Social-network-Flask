@@ -14,14 +14,14 @@
     height: 200px;
     padding: 15px;
     border-radius: 5px;
-    border: 1px solid rgb(55, 84, 55);
+    border: 10px solid rgb(55, 84, 55);
 }
 .like{
     height: 100px;
     display: inline-block;
     vertical-align: top;
     position: absolute;
-    left: 14%;
+    left: 10%;
 
 }
 .time{
@@ -164,13 +164,14 @@
     height: 200px;
     padding: 15px;
     border-radius: 5px;
-    border: 1px solid rgb(55, 84, 55);
-    width: 100%;
+    border: 7px solid rgb(55, 84, 55);
+    width: 80%;
+    margin-right: 90px;
 }
 .sub {
     position: relative;
-    width: 150px;
-    height: 55px;
+    width: 110px;
+    height: 40px;
     border-radius: 45px;
     border: none;
     background-color: rgb(121, 252, 202);
@@ -182,7 +183,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    right: 43%;
+    right: 79%;
+    margin-bottom: 15px;
   }
   
   .sub::before {
@@ -307,17 +309,12 @@
     transform: scale(1.15);
     transform-origin: top;
   }
-.first{
-    height: 200px;
-    padding: 15px;
-    border-radius: 5px;
-    border: 1px solid rgb(55, 84, 55);
-    margin-right: 25px;
-}
+
 .del {
     position: relative;
-    width: 150px;
-    height: 55px;
+    width: 110px;
+    height: 50px;
+    margin-bottom: 10px;
     border-radius: 45px;
     border: none;
     background-color: rgb(255, 97, 147);
@@ -329,7 +326,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    right: 43%;
+    right: 75%;
     text-decoration: none;
   }
   
@@ -354,10 +351,138 @@
     bottom: 7px;
     border-radius: 50%;
   }
+
+.first{
+    height: 150px;
+    padding: 15px;
+    width: 75%;
+    border-radius: 5px;
+    border: 5px solid rgb(55, 84, 55);
+    margin-right: 100px;
+    background-color: white;
+}
+
  .second{
-    height: 200px;
+    height: 120px;
+    width: 68%;
     padding: 15px;
     border-radius: 5px;
-    border: 1px solid rgb(55, 84, 55);
-    margin-right: 50px;
+    border: 5px solid rgb(55, 84, 55);
+    margin-right: 150px;
+    background-color: white;
  } 
+ .coomment{
+    width: 68%;
+    height: 130px;
+    padding: 15px;
+    border-radius: 5px;
+    border: 5px solid rgb(85, 155, 85);
+    margin-bottom: 15px;
+    margin-right: 150px;
+}
+.hr2{
+  color: #209810;
+  border: 3px solid rgb(142, 212, 142) ;
+}
+.coomment:focus {
+  border-color: #8bdc8b;
+  box-shadow: 0 0 0 0.2rem rgba(151, 250, 171, 0.25);
+}   
+
+.subb {
+    position: relative;
+    width: 120px;
+    height: 40px;
+    border-radius: 45px;
+    border: none;
+    background-color: rgb(121, 252, 202);
+    color: rgb(0, 0, 0);
+    box-shadow: 0px 10px 10px rgb(187, 253, 191) inset,
+    0px 5px 10px rgba(5, 5, 5, 0.212),
+    0px -10px 10px rgb(54, 255, 111) inset;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 70%;
+    margin-bottom: 15px;
+  }
+  
+  .subb::before {
+    width: 70%;
+    height: 2px;
+    position: absolute;
+    background-color: rgba(250, 250, 250, 0.678);
+    content: "";
+    filter: blur(1px);
+    top: 7px;
+    border-radius: 50%;
+  }
+  
+  .subb::after {
+    width: 70%;
+    height: 2px;
+    position: absolute;
+    background-color: rgba(250, 250, 250, 0.137);
+    content: "";
+    filter: blur(1px);
+    bottom: 7px;
+    border-radius: 50%;
+  }
+  
+  .subb:hover {
+    animation: jello-horizontal 0.9s both;
+  }
+
+  .dell {
+    position: relative;
+    width: 120px;
+    height: 50px;
+    margin-bottom: 10px;
+    border-radius: 45px;
+    border: none;
+    background-color: rgb(255, 97, 147);
+    color: rgb(0, 0, 0);
+    box-shadow: 0px 10px 10px rgb(253, 187, 239) inset,
+    0px 5px 10px rgba(5, 5, 5, 0.212),
+    0px -10px 10px rgb(255, 54, 128) inset;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 70%;
+    text-decoration: none;
+  }
+  
+  .dell::before {
+    width: 70%;
+    height: 2px;
+    position: absolute;
+    background-color: rgba(250, 250, 250, 0.678);
+    content: "";
+    filter: blur(1px);
+    top: 7px;
+    border-radius: 50%;
+  }
+  
+  .dell::after {
+    width: 70%;
+    height: 2px;
+    position: absolute;
+    background-color: rgba(250, 250, 250, 0.137);
+    content: "";
+    filter: blur(1px);
+    bottom: 7px;
+    border-radius: 50%;
+  }
+
+.nazar {
+    border: 5px solid rgb(55, 84, 55);
+    width: 80%;
+    margin-bottom: 10px;
+    background-color:dimgray;
+    border-radius: 5%;
+    padding-right: 10px;
+    border-top-right-radius: 0;
+            
+  }

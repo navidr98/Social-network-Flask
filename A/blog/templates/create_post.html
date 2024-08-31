@@ -2,14 +2,17 @@
 
 {% block title %}Post{% endblock %}
 
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='creat-post.css') }}">
+{% endblock %}
 {% block content %}
 
     <form action="" method="post">
 
         {{ form.csrf_token }}
-        {{ form.title.label(class='form-control-label') }} {{ form.title(class='form-control') }}
-        {{ form.content.label(class='form-control-label') }} {{ form.content(class='form-control') }}
-        {{ form.submit(class='btn btn-info') }}
+        {{ form.title.label(class='titr') }} {{ form.title(class='form-titr') }}
+        {{ form.content.label(class='titr') }} {{ form.content(class='form-total') }}
+        {{ form.submit(class='sabt') }}
 
     </form>
 

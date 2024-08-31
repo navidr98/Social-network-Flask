@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
 {% block title %}Edit Profile{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='edit-profile.css') }}">
+{% endblock %}
 
 {% block content %}
 
@@ -11,15 +14,15 @@
     <form action="" method="post">
 
         {{ form.csrf_token }} 
-        {{ form.username.label }}<br> {{ form.username }}
-        {{ form.submit_user }}
-        <hr>
-        {{ form.email.label }}<br> {{ form.email }}
-        {{ form.submit_email }}
-        <hr>
-        {{ form.password.label }}<br> {{ form.password }}<br>
-        {{ form.confirm_password.label }}<br> {{ form.confirm_password }}
-        {{ form.submit_pass }}
+        {{ form.username.label(class='label-prof') }} {{ form.username(class='input-style') }}
+        {{ form.submit_user(class='sub-prof') }}
+        <hr class="hr2">
+        {{ form.email.label(class='label-prof') }} {{ form.email(class='input-style') }}
+        {{ form.submit_email(class='sub-prof') }}
+        <hr class="hr2">
+        {{ form.password.label(class='label-prof') }} {{ form.password(class='input-style') }}
+        {{ form.confirm_password.label(class='label-prof') }} {{ form.confirm_password(class='input-style') }}
+        {{ form.submit_pass(class='sub-prof') }}
 
     </form>
 

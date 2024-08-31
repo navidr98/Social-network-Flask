@@ -4,7 +4,6 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationE
 from blog.models import User
 from flask_wtf.recaptcha import RecaptchaField
 from flask_login import current_user
-import jdatetime
 
 
 

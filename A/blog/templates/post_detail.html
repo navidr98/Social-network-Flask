@@ -13,8 +13,8 @@
         <div class="post">
             <div class="content">
                 <b>
-                    <p class="title">عنوان پست {{ post.title }} <br>تاریخ ثبت پست {{ post_date }}</p></b>  
-                    <p><b>پست توسط {{ post.author.username|upper }} ثبت شده</p>
+                    <p class="title">عنوان پست {{ post.title }}</p></b>  
+                    <p><b>پست توسط {{ post.author.username|upper }} در تاریخ {{ post_date }} ثبت شده</p>
 
                 <p class="boxi">{{ post.content }} </p>
                 <div class="time"> 
@@ -61,46 +61,40 @@
             {% endif %}
             <hr>
             
-            <h3>نظرات</h3>
+
             <form action="" method="post">
 
                 {{ comment_form.csrf_token }}
                 {{ comment_form.hidden_tag() }}
-                {{ comment_form.content(class='comment') }}<br>
+                {{ comment_form.content(class='comment',placeholder='نظر خود را وارد کنید') }}<br>
                 {{ comment_form.submit(class='sub') }}
             </form>
-        
+            <h3>نظرات</h3>
             {% for comment in post.comments %}
                 <div class="nazar">
                     <p >نظر توسط {{ comment.owner.username|upper }} - {{ reply_date }}</p>
                     <p class="first">{{ comment.content }}</p>
                     {% if comment.owner == current_user %}
-                                <a href="{{ url_for('delete_comment', comment_id=comment.id) }}" class="del">حذف کامنت</a>
-                            {% endif %}
-                    
-                    {% if comment.replies %}
-                        <h4>پاسخ ها</h4>
+                        <a href="{{ url_for('delete_comment', comment_id=comment.id) }}" class="del">حذف نظر</a>
                     {% endif %}
                     
-
-
+                    
                     {% for reply in comment.rep %}
-                        <div class="nazar">
-                            <p> پاسخ توسط {{ reply.response.username }} - {{ reply.date.strftime('%Y-%m-%d') }}</p>
+                        <div class="">
+                            <p> پاسخ توسط {{ reply.response.username|upper }} <br>تاریخ {{ reply.date.strftime('%Y-%m-%d') }}</p>
                             <p class="second">{{ reply.text }}</p>
                             {% if reply.response == current_user %}
-                                <a href="{{ url_for('delete_reply', reply_id=reply.id) }}" class="del">حذف پاسخ</a>
+                                <a href="{{ url_for('delete_reply', reply_id=reply.id) }}" class="dell">حذف پاسخ</a>
                             {% endif %}
-                            <hr>
                         </div>
-                    <form action="{{ url_for('reply', comment_id=comment.id) }}" method="post">
-                            {{ reply_form.csrf_token }}
-                            {{ reply_form.text(class='form-control') }}<br>
-                            {{ reply_form.submit(class='sub') }}
-                    </form>
-                        
-                        
+
                     {% endfor %}
+                    <form action="{{ url_for('reply', comment_id=comment.id) }}" method="post">
+                        {{ reply_form.csrf_token }}
+                        {{ reply_form.text(class='coomment',placeholder='پاسخ خود را وارد کنید') }}<br>
+                        {{ reply_form.submit(class='subb') }}
+                        
+                    </form>
                     
                 </div>
             {% endfor %}<hr>
